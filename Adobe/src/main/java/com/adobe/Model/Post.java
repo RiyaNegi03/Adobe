@@ -1,35 +1,46 @@
 package com.adobe.Model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import java.time.LocalDateTime;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Post {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
 
-	    @Id
-	    @GeneratedValue(strategy = GenerationType.AUTO)
-		private int id;
-//		(unique identifier)
 		
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@JoinColumn(name = "userId",nullable = false)
+	private User user_id;
+
 		
-		private int  user_id;
-//		(foreign key referencing the User model)
+	@Size(min = 1, max = 300, message = "{validation.name.size}")
+	private String content;
+
+
+	@CreationTimestamp
+	private LocalDateTime created_at;
+
+
+	@UpdateTimestamp
+	private LocalDateTime updated_at;
+
 		
-		@Size(min = 1, max = 300, message = "{validation.name.size}")
-		private String content; 
-//		(string, 1-300 characters)
-		
-		 private LocalDateTime created_at;
-//		 (timestamp, automatically set when the post is created)
-		
-		private LocalDateTime updated_at;
-//		 (timestamp, automatically updated when the post is updated)
-		
-		
-		private int likes;
-//		(integer, non-negative)
+	
+	private int likes;
+
+
 	
 }

@@ -1,37 +1,50 @@
 package com.adobe.Model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-public class User {
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-	
+	private int userId;
+
+	@NotBlank
 	@Size(min = 1, max = 150, message = "{validation.name.size}")
 	private String name;
-//	(string, 1-50 characters)
-	
-	@Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}")
+
+
+	@NotBlank
+	@Email()
 	private String email;
-//	(string, valid email format)
+
 	
 	@Size(min = 1, max = 200, message = "{validation.name.size}")
 	private String bioString;
-//	(optional string, 0-200 characters)
-	
+
+	@CreationTimestamp
 	private LocalDateTime created_at;
-//	(timestamp, automatically set when the user is created)
+
 	
-	
+	@UpdateTimestamp
 	private LocalDateTime updated_at;
-//	(timestamp, automatically updated when the user is updated)
 	
 	
 }

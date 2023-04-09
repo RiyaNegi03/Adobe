@@ -1,6 +1,7 @@
 package com.adobe.Exceptions;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,8 +14,8 @@ import lombok.ToString;
 @AllArgsConstructor
 public class MyErrorDetails {
 
-	private LocalDate localDate;
-	private String Message;
-	private String Description;
+	private LocalDateTime timestamp;
+	private String message;
+	private String details;
 	
 }
